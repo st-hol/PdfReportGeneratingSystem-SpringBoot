@@ -1,0 +1,143 @@
+body{
+    margin: 0 auto;
+    text-align: left;
+}
+
+.table-cont{
+    width: 90%;
+    position: absolute;
+    left: 0;
+    top:0;
+}
+
+li {
+    list-style-type: none;
+}
+
+a:link, a:hover, a:visited {
+    text-decoration: none;
+    color: black;
+}
+
+.pagination {
+    display: flex;
+    margin-left: 9%;
+}
+
+.page-item {
+    margin-right: 18px;
+    border-radius: 10px;
+    border: solid 1px #ececec;
+}
+
+.pagination a {
+    padding: 11px 16px 11px 16px;
+    transition: .2s all;
+    display: flex;
+}
+
+.pagination a:hover {
+    border-radius: 10px;
+    color: white;
+    background-color: dodgerblue;
+}
+
+.page-item active {
+    background-color: #ececec;
+}
+
+.responstable {
+    margin: 1em 0;
+    max-width: 100%;
+    overflow: hidden;
+    background: #FFF;
+    color: black;
+    border-radius: 10px;
+    border: 1px solid blue;
+
+    transform: scale(0.8);
+}
+
+.responstable tr {
+    border: 1px solid lightblue;
+}
+
+.responstable tr:nth-child(odd) {
+    background-color: lightblue;
+}
+
+.responstable th {
+    display: none;
+    border: 1px solid #FFF;
+    background-color: lightskyblue;
+    color: #FFF;
+    padding: 1em;
+}
+
+.responstable th:first-child {
+    display: table-cell;
+    text-align: center;
+}
+
+.responstable th:nth-child(2) {
+    display: table-cell;
+}
+
+.responstable th:nth-child(2) span {
+    display: none;
+}
+
+.responstable th:nth-child(2):after {
+    content: attr(data-th);
+}
+
+@media (min-width: 480px) {
+    .responstable th:nth-child(2) span {
+        display: block;
+    }
+
+    .responstable th:nth-child(2):after {
+        display: none;
+    }
+}
+
+.responstable td {
+    display: block;
+    word-wrap: break-word;
+    max-width: 7em;
+}
+
+.responstable td:first-child {
+    display: table-cell;
+    text-align: center;
+    border-right: 1px solid #D9E4E6;
+}
+
+@media (min-width: 480px) {
+    .responstable td {
+        border: 1px solid #D9E4E6;
+    }
+}
+
+.responstable th, .responstable td {
+    text-align: left;
+    margin: .5em 1em;
+}
+
+@media (min-width: 480px) {
+    .responstable th, .responstable td {
+        display: table-cell;
+        padding: 1em;
+    }
+}
+
+
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.home{
+    margin-left: 12%;
+}
