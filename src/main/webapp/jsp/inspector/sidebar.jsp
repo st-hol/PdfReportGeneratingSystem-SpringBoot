@@ -18,12 +18,6 @@
                         <spring:message code="check.reports"/>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="${pageContext.request.contextPath}/inspector/set-taxable" class="nav-link active">
-                        <i class="fa fa-home"></i>
-                        <spring:message code="set.taxable"/>
-                    </a>
-                </li>
             </ul>
         </div>
         <!-- END MENU -->

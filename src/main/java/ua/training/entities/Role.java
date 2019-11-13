@@ -1,14 +1,10 @@
 package ua.training.entities;
 
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
-
 
 
 @Getter
@@ -39,8 +35,6 @@ public class Role {
         this.name = name;
     }
 
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -55,29 +49,4 @@ public class Role {
         return Objects.hash(id, name);
     }
 }
-
-
-
-
-
-
-
-
-
-
-//    @Transient
-//    static Role defaultRoleByRegistrationInstance;
-//
-//    public static Role getDefaultRoleInstance() {
-//        if (defaultRoleByRegistrationInstance == null) {
-//            synchronized (Role.class) {
-//                if (defaultRoleByRegistrationInstance == null) {
-//                    defaultRoleByRegistrationInstance = new Role();
-//                    defaultRoleByRegistrationInstance.setId(0L);
-//                    defaultRoleByRegistrationInstance.setName("CLIENT");
-//                }
-//            }
-//        }
-//        return defaultRoleByRegistrationInstance;
-//    }
 

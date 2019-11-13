@@ -10,14 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/error")
 public class ErrorController {
 
-    private final Logger logger = LoggerFactory.getLogger(ErrorController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ErrorController.class);
 
     @GetMapping(value = "/403")
     public String personalCabinet() {
-        logger.info("Attempt of unlawful action was prevented. Access denied ");
+        LOG.info("Attempt of unlawful action was prevented. Access denied ");
         return "common/error/403";
     }
-
-
 
 }

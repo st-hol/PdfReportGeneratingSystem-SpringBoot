@@ -49,16 +49,4 @@ public class Report {
     private String inspectorComment;
 
 
-
-
-
-
-//    public void setAcceptedFromInt(int iIsAccepted) {
-//        isAccepted = (iIsAccepted != 0);
-//    }
-//
-//    public void setShouldChangeFromInt(int iShouldChange) {
-//        shouldBeChanged = (iShouldChange != 0);
-//    }
-
 }

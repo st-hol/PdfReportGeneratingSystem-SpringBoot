@@ -12,6 +12,4 @@ public interface RoleService {
     Role save(Role role);
 
     List<Role> findAllByUser(User user);
-
-//    List<Role> findAllByUserName(String userName);
 }

@@ -18,7 +18,7 @@ import ua.training.util.UserValidator;
 @Controller
 public class AccountController {
 
-    private final Logger logger = LoggerFactory.getLogger(AccountController.class);
+    private final Logger LOG = LoggerFactory.getLogger(AccountController.class);
 
     @Autowired
     private UserValidator userValidator;
@@ -43,14 +43,14 @@ public class AccountController {
         userValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            logger.info("reg. form had errors. redirecting");
+            LOG.info("reg. form had errors. redirecting");
             return "common/registration";
         }
 
         userService.registerUser(userForm);
         securityService.autoLoginAfterReg(userForm.getUsername(), userForm.getPasswordConfirm());
 
-        logger.info("user registered");
+        LOG.info("user registered");
         return "redirect:/registration";
     }
 

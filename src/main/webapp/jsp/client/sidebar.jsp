@@ -27,9 +27,9 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/client/make-complaint">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/client/obtain-digital-signature">
                         <i class="fa fa-check"></i>
-                        <spring:message code="make.complaint"/>
+                        <spring:message code="obtain.d.s"/>
                     </a>
                 </li>
 

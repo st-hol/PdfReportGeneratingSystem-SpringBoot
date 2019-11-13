@@ -3,12 +3,10 @@ package ua.training.services.impl;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.training.entities.Complaint;
+
 import ua.training.entities.Role;
 import ua.training.entities.User;
-import ua.training.repositories.ComplaintRepository;
 import ua.training.repositories.RoleRepository;
-import ua.training.services.ComplaintService;
 import ua.training.services.RoleService;
 
 import java.util.List;
@@ -39,12 +37,6 @@ public class RoleServiceImpl implements RoleService {
     public void setComplaintRepository(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
-
-
-//    @Override
-//    public List<Role> findAllByUserName(String userName) {
-//        return roleRepository.findByPersons_userName(userName);
-//    }
 
 
     @Override

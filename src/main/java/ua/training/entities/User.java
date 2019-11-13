@@ -66,18 +66,6 @@ public class User {
     @JoinColumn(name = "id_inspector")
     private User assignedInspector;
 
-    //mb fetch = FetchType.LAZY
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",
-            //cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    private Set<Complaint> complaints = new HashSet<>();
-
-//    @ManyToMany(fetch = FetchType.LAZY)
-    @ManyToMany
-    @JoinTable(name = "persons_has_taxable_items",
-            joinColumns = @JoinColumn(name = "id_person", referencedColumnName = "id_person"),
-            inverseJoinColumns = @JoinColumn(name = "id_item", referencedColumnName = "id_item"))
-    private Set<TaxableItem> taxableItems = new HashSet<>();
 
 
     @Override
@@ -90,8 +78,6 @@ public class User {
                 ", password='" + password + '\'' +
                 ", passwordConfirm='" + passwordConfirm + '\'' +
                 ", roles=" + roles +
-                ", complaints=" + complaints +
-            //    ", taxableItems=" + taxableItems +
                 '}';
     }
 
