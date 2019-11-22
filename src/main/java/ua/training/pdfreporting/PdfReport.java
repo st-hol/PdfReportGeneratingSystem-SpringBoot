@@ -22,16 +22,17 @@ import ar.com.fdvs.dj.domain.entities.columns.AbstractColumn;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import ua.training.entities.Report;
 
 public class PdfReport {
 
-	private final Collection<String> list;
+	private final Collection<Report> list;
 
-	public PdfReport(Collection<String> c) {
+	public PdfReport(Collection<Report> c) {
 		list = new ArrayList<>(c);
 	}
 
-	public JasperPrint getReport() throws ColumnBuilderException, JRException, ClassNotFoundException {
+	public JasperPrint getReport() throws JRException {
 		Style headerStyle = createHeaderStyle();
 		Style detailTextStyle = createDetailTextStyle();
 		Style detailNumberStyle = createDetailNumberStyle();
@@ -80,8 +81,7 @@ public class PdfReport {
 				.build();
 	}
 
-	private AbstractColumn createColumn(String property, Class<?> type, String title, int width, Style headerStyle, Style detailStyle)
-			throws ColumnBuilderException {
+	private AbstractColumn createColumn(String property, Class<?> type, String title, int width, Style headerStyle, Style detailStyle) {
 		return ColumnBuilder.getNew()
 				.setColumnProperty(property, type.getName())
 				.setTitle(title)
@@ -91,30 +91,29 @@ public class PdfReport {
 				.build();
 	}
 
-	private DynamicReport getReport(Style headerStyle, Style detailTextStyle, Style detailNumStyle)
-			throws ColumnBuilderException, ClassNotFoundException {
+	private DynamicReport getReport(Style headerStyle, Style detailTextStyle, Style detailNumStyle) {
 
 		DynamicReportBuilder report = new DynamicReportBuilder();
 
-		AbstractColumn columnEmpNo = createColumn("empNo", Integer.class, "Employee Number", 30, headerStyle, detailTextStyle);
-		AbstractColumn columnName = createColumn("name", String.class, "Name", 30, headerStyle, detailTextStyle);
-		AbstractColumn columnSalary = createColumn("salary", Integer.class, "Salary", 30, headerStyle, detailNumStyle);
-		AbstractColumn columnCommission = createColumn("commission", Float.class, "Commission", 30, headerStyle, detailNumStyle);
-		report.addColumn(columnEmpNo).addColumn(columnName).addColumn(columnSalary).addColumn(columnCommission);
+		AbstractColumn columnEmpNo = createColumn("id", Long.class, "id", 30, headerStyle, detailTextStyle);
+		AbstractColumn columnName = createColumn("companyName", String.class, "companyName", 30, headerStyle, detailTextStyle);
+		AbstractColumn columnSalary = createColumn("totalAmountOfProperty", Long.class, "totalAmountOfProperty", 30, headerStyle, detailNumStyle);
+
+		report.addColumn(columnEmpNo)
+				.addColumn(columnName)
+				.addColumn(columnSalary);
 
 		StyleBuilder titleStyle = new StyleBuilder(true);
 		titleStyle.setHorizontalAlign(HorizontalAlign.CENTER);
 		titleStyle.setFont(new Font(20, null, true));
-		// you can also specify a font from the classpath, eg:
-		// titleStyle.setFont(new Font(20, "/fonts/someFont.ttf", true));
 
 		StyleBuilder subTitleStyle = new StyleBuilder(true);
 		subTitleStyle.setHorizontalAlign(HorizontalAlign.CENTER);
 		subTitleStyle.setFont(new Font(Font.MEDIUM, null, true));
 
-		report.setTitle("Employee Report");
+		report.setTitle("title");
 		report.setTitleStyle(titleStyle.build());
-		report.setSubtitle("Commission received by Employee");
+		report.setSubtitle("subtitle");
 		report.setSubtitleStyle(subTitleStyle.build());
 		report.setUseFullPageWidth(true);
 		return report.build();
