@@ -21,6 +21,8 @@ import java.util.Set;
 @Service
 public class SecurityServiceImpl implements SecurityService {
 
+    private static final Logger LOG = LoggerFactory.getLogger(SecurityServiceImpl.class);
+
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
@@ -28,8 +30,6 @@ public class SecurityServiceImpl implements SecurityService {
     @Autowired
     @Qualifier("userDetailsServiceImpl")
     private UserDetailsService userDetailsService;
-
-    private static final Logger LOG = LoggerFactory.getLogger(SecurityServiceImpl.class);
 
     @Override
     public String findLoggedInUsername() {
