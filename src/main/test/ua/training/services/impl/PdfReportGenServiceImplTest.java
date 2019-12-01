@@ -1,12 +1,11 @@
 package ua.training.services.impl;
 
-import java.io.IOException;
-
+import com.itextpdf.text.DocumentException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import com.itextpdf.text.DocumentException;
+import java.io.IOException;
 
 public class PdfReportGenServiceImplTest {
 
@@ -16,8 +15,10 @@ public class PdfReportGenServiceImplTest {
 
     @Test
     public void testSubstitute() throws IOException, DocumentException {
-        String[] fields = new String[]{"1"};
-        pdfReportGenServiceImpl.substituteFields("1.pdf", "1_.pdf", fields);
+        String[] fields = new String[]{"name"};
+        String[] values = new String[]{"1"};
+        pdfReportGenServiceImpl.substituteFields("1.pdf", "1_.pdf", fields, values);
     }
 
 }
+

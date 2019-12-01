@@ -5,10 +5,10 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import ua.training.util.Mail;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-
-import ua.training.entities.Mail;
 
 @Service
 public class MailService {

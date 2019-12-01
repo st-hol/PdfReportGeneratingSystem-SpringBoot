@@ -14,39 +14,34 @@ import ua.training.entities.User;
 import ua.training.services.ReportService;
 import ua.training.services.UserService;
 
+
 @Controller
-@RequestMapping(value = "/client")
-public class ClientController {
+@RequestMapping(value = "/inspector")
+public class AdminController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ClientController.class);
-
-    @Autowired
-    private UserService userService;
+    private static final Logger LOG = LoggerFactory.getLogger(AdminController.class);
 
     @Autowired
     private ReportService reportService;
 
+    @Autowired
+    private UserService userService;
 
-    @GetMapping("/personal-cabinet")
+    @GetMapping(value = "/personal-cabinet")
     public String personalCabinet() {
-        return "client/client-base";
+        return "inspector/inspector-base";
     }
 
-    @GetMapping("/show-reports")
+    @GetMapping(value = "/show-reports")
     public String list(Model uiModel, Pageable pageable) {
         User currentUser = userService.obtainCurrentPrincipleUser();
-        Page<Report> page = reportService.findAllByPerson(currentUser, pageable);
+        Page<Report> page = reportService.findAllReportsOfPersonsByAssignedInspector(currentUser, pageable);
 
         uiModel.addAttribute("page", page);
-        uiModel.addAttribute("url", "/client/show-reports");
+        uiModel.addAttribute("url", "/inspector/show-reports");
 
-        return "client/show-reports";
+        return "inspector/show-reports";
     }
-
-
-    @GetMapping("/report-done")
-    public String successPageReportDone() {
-        return "client/report-done";
-    }
-
 }
+
+

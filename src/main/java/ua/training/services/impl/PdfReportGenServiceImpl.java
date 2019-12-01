@@ -1,25 +1,23 @@
 package ua.training.services.impl;
 
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
-
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 @Service
 public class PdfReportGenServiceImpl {
@@ -46,22 +44,31 @@ public class PdfReportGenServiceImpl {
 		return rawBytes;
 	}
 
-	public void substituteFields(String src, String dest, String[] inputValues) throws DocumentException, IOException {
+    public byte[] getReportTemplateFromDB() {
+        //todo check if fields saved to db
+        return new byte[]{1};
+    }
+
+    public byte[] saveFilledReportToDB() {
+        //todo
+        return new byte[]{1};
+    }
+
+    public void substituteFields(String src, String dest,
+                                 String[] inputValues, String[] fieldNames)
+            throws DocumentException, IOException {
+
 		PdfReader reader = new PdfReader(src);
 		PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(dest));
 		AcroFields form = stamper.getAcroFields();
 		LOG.info(String.format("obtained form name - %s", form.toString()));
-		for(String fieldValue : inputValues) {
-			form.setField(fieldValue, "stub");
-			LOG.info(String.format("field value was written - %s", form.getField("name")));
+        for (int i = 0; i < inputValues.length; i++) {
+            form.setField(fieldNames[i], inputValues[i]);
+            LOG.info(String.format("field value was written - %s", form.getField(inputValues[i])));
 		}
 		stamper.setFormFlattening(true);
 		stamper.close();
 	}
 }
-
-
-
-
 
 

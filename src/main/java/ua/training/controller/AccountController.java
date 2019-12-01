@@ -30,7 +30,6 @@ public class AccountController {
     private UserService userService;
 
 
-
     @GetMapping("/registration")
     public String registration(Model model) {
         model.addAttribute("userForm", new User());
@@ -64,7 +63,5 @@ public class AccountController {
 
         return "common/login";
     }
-
-
 
 }
