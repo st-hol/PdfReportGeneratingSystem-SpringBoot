@@ -34,20 +34,20 @@
             </h3>
         </div>
 
-        <a class="" href="${pageContext.request.contextPath}/reporting/report.pdf">
+        <a class="" href="${pageContext.request.contextPath}/personal-cabinet">
             <spring:message code="back.to.cabinet"/>
         </a>
 
         <br>
 
-        <a class="" href="${pageContext.request.contextPath}/reporting/get-by-email">
-            <spring:message code="back.to.cabinet"/>
+        <a class="" href="${pageContext.request.contextPath}/client/downloadFile/<c:out value="${reportId}"/>">
+            <spring:message code="download"/>
         </a>
 
         <br>
 
         <a class="" href="${pageContext.request.contextPath}/personal-cabinet">
-            <spring:message code="back.to.cabinet"/>
+            <spring:message code="get.by.email"/>
         </a>
     </div>
 </div>

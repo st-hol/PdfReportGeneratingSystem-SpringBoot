@@ -62,7 +62,7 @@ public class ClientController {
     }
 
     @PostMapping("/fill-report")
-    public String fillReport(@RequestParam Map<String, String> allRequestParams)
+    public String fillReport(@RequestParam Map<String, String> allRequestParams, Model uiModel)
             throws IOException, DocumentException {
 
         ReportTemplate reportTemplate = reportTemplateService.findById(
@@ -87,7 +87,9 @@ public class ClientController {
             reportParams.add(reportParam);
         }
 
-        byte[] toDownload = pdfReportGenService.substituteFields(reportTemplate.getReportPdf(), new String[]{"name"}, new String[]{"val"});
+        byte[] toDownload = pdfReportGenService.substituteFields(reportTemplate.getReportPdf(),
+                new String[]{"name"}, new String[]{"val"});
+
         report.setReportPdf(toDownload);
 
         report.setReportParams(reportParams);
@@ -96,8 +98,9 @@ public class ClientController {
             reportParamService.save(reportParam);
         }
 
-        return "redirect:/client/downloadFile/" + report.getId();
-//        return "redirect:/client/report-done";
+        uiModel.addAttribute("reportId", report.getId());
+//        return "redirect:/client/downloadFile/" + report.getId();
+        return "client/report-done";
     }
 
     //report-downloading command
