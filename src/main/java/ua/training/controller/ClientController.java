@@ -1,16 +1,17 @@
 package ua.training.controller;
 
+import com.itextpdf.text.DocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ua.training.entities.Report;
 import ua.training.entities.ReportParam;
 import ua.training.entities.ReportTemplate;
@@ -18,6 +19,7 @@ import ua.training.entities.User;
 import ua.training.services.UserService;
 import ua.training.services.impl.*;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Map;
@@ -60,7 +62,8 @@ public class ClientController {
     }
 
     @PostMapping("/fill-report")
-    public String fillReport(@RequestParam Map<String, String> allRequestParams) {
+    public String fillReport(@RequestParam Map<String, String> allRequestParams)
+            throws IOException, DocumentException {
 
         ReportTemplate reportTemplate = reportTemplateService.findById(
                 Long.parseLong(allRequestParams.get("templateId")));
@@ -84,13 +87,32 @@ public class ClientController {
             reportParams.add(reportParam);
         }
 
+        byte[] toDownload = pdfReportGenService.substituteFields(reportTemplate.getReportPdf(), new String[]{"name"}, new String[]{"val"});
+        report.setReportPdf(toDownload);
+
         report.setReportParams(reportParams);
         reportService.save(report);
         for (ReportParam reportParam : reportParams) {
             reportParamService.save(reportParam);
         }
 
-        return "redirect:/client/report-done";
+        return "redirect:/client/downloadFile/" + report.getId();
+//        return "redirect:/client/report-done";
+    }
+
+    //report-downloading command
+    @GetMapping(value = "/downloadFile/{fileId}", produces = MediaType.APPLICATION_PDF_VALUE)
+    @ResponseBody
+    public HttpEntity<byte[]> downloadReportPdf(@PathVariable String fileId) {
+        Report dbFile = reportService.getFile(Long.parseLong(fileId));
+        final byte[] data = dbFile.getReportPdf();
+
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.APPLICATION_PDF);
+        header.set(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=report.pdf");
+        header.setContentLength(data.length);
+
+        return new HttpEntity<>(data, header);
     }
 
     @GetMapping("/report-done")

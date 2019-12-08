@@ -23,7 +23,7 @@ public class Report {
     private User person;
 
     @Lob
-    @Column(name = "report_pdf", columnDefinition = "BLOB")
+    @Column(name = "report_pdf", columnDefinition = "LONGBLOB")
     private byte[] reportPdf;
 
     @ManyToOne(cascade = CascadeType.ALL)

@@ -25,7 +25,7 @@ public class ReportTemplate {
     private String templateName;
 
     @Lob
-    @Column(name = "report_pdf", columnDefinition = "BLOB")
+    @Column(name = "report_pdf", columnDefinition = "LONGBLOB")
     private byte[] reportPdf;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "template",

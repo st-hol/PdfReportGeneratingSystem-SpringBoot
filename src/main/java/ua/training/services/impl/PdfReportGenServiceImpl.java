@@ -70,6 +70,22 @@ public class PdfReportGenServiceImpl {
 		stamper.close();
 	}
 
+	public byte[] substituteFields(byte[] pdf_bytes, String[] fieldNames, String[] inputValues)
+			throws DocumentException, IOException {
+		PdfReader reader = new PdfReader(pdf_bytes);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		PdfStamper stamper = new PdfStamper(reader, baos);
+		AcroFields form = stamper.getAcroFields();
+		LOG.info(String.format("obtained form name - %s", form.toString()));
+		for (int i = 0; i < inputValues.length; i++) {
+			form.setField(fieldNames[i], inputValues[i]);
+			LOG.info(String.format("field value was written - %s", form.getField(inputValues[i])));
+		}
+		stamper.setFormFlattening(true);
+		stamper.close();
+		return baos.toByteArray();
+	}
+
 //	private byte[] getByteArrayFromFile(final Document handledDocument) throws IOException {
 //		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 //		final InputStream in = new FileInputStream(handledDocument);

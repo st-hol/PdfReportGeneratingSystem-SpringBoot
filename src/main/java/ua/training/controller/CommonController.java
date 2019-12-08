@@ -6,14 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
 import ua.training.entities.Role;
 import ua.training.entities.User;
 import ua.training.services.RoleService;
 import ua.training.services.UserService;
 
 import java.security.Principal;
-import java.util.*;
+import java.util.List;
 
 @Controller
 public class CommonController {
@@ -24,6 +23,13 @@ public class CommonController {
     private UserService userService;
     @Autowired
     private RoleService roleService;
+
+
+    @GetMapping("/uploadFile")
+    public String uploadForm() {
+        return "inspector/upload-template";
+    }
+
 
 
     @GetMapping({"/", "/welcome"})
