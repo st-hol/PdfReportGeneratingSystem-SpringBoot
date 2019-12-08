@@ -1,52 +1,40 @@
 package ua.training.entities;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-
-@ToString
-@Getter
-@Setter
 @Entity
-@Table(name = "reports")
+@Table(name = "completed_reports")
+@Data
 public class Report {
-
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "id_report")
+    @Column(name = "id")
     private long id;
 
-    @Column(name = "company_name")
-    private String companyName;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_person", nullable = false)
+    private User person;
 
-    @Column(name = "taxpayer_code")
-    private String taxpayerCode;
+    @Lob
+    @Column(name = "report_pdf", columnDefinition = "BLOB")
+    private byte[] reportPdf;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "report_type", referencedColumnName = "id_template")
+    private ReportTemplate reportType;
+
+    @OneToMany(mappedBy = "report")
+    private Set<ReportParam> reportParams;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "completion_time")
     private Date completionTime;
-
-    @Column(name = "total_amount_of_property")
-    private long totalAmountOfProperty;
-
-    @ManyToOne
-    @JoinColumn(name = "id_person", referencedColumnName = "id_person")
-    private User person;
-
-    @Column(name = "is_accepted")
-    private boolean accepted;
-
-    @Column(name = "should_be_changed")
-    private boolean shouldBeChanged;
-
-    @Column(name = "inspector_comment")
-    private String inspectorComment;
-
 
 }

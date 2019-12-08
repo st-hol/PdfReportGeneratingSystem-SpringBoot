@@ -13,7 +13,7 @@
             </h5>
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a href="${pageContext.request.contextPath}/client/make-report" class="nav-link">
+                    <a href="${pageContext.request.contextPath}/reporting/choose-report" class="nav-link">
                         <i class="fa fa-home"></i>
                         <spring:message code="submit.report"/>
                     </a>

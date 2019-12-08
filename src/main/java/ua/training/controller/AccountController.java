@@ -50,7 +50,7 @@ public class AccountController {
         securityService.autoLoginAfterReg(userForm.getUsername(), userForm.getPasswordConfirm());
 
         LOG.info("user registered");
-        return "redirect:/registration";
+        return "redirect:/personal-cabinet";
     }
 
     @GetMapping("/login")

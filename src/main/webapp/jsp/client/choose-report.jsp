@@ -30,18 +30,18 @@
 
         <div class="panel-heading clearfix">
             <h3 class="panel-title">
-                <spring:message code="edit.report"/>
+                <spring:message code="choose.report"/>
             </h3>
         </div>
 
-        <form method="POST" class="" action="${pageContext.request.contextPath}/client/choose-report">
+        <form method="POST" class="" action="${pageContext.request.contextPath}/reporting/choose-report">
 
             <div class="form-group">
-                <select class="soflow-color" name="id_template" required>
+                <select class="soflow-color" name="idTemplate" required>
                     <option value=""><fmt:message key="placeholder.choose.template"/></option>
                     <c:forEach var="template" items="${reportTemplates}">
                         <option value="${template.id}">
-                            <c:out value="${template.name}"/>
+                            <c:out value="${template.templateName}"/>
                         </option>
                     </c:forEach>
                 </select>

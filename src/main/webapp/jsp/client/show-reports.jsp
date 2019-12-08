@@ -23,29 +23,18 @@
 <div class="table-cont">
     <table class="responstable" border="1" cellpadding="3" cellspacing="3">
         <tr>
-            <th><spring:message code="placeholder.company.name"/></th>
-            <th><spring:message code="placeholder.taxpayer.code"/></th>
+            <th><spring:message code="placeholder.report.id"/></th>
+            <th><spring:message code="placeholder.report.template.name"/></th>
             <th><spring:message code="completion.time"/></th>
-            <th><spring:message code="total.amount"/></th>
-            <th><spring:message code="is.accepted"/></th>
-            <th><spring:message code="should.change"/></th>
-            <th><spring:message code="insp.comment"/></th>
-            <th></th>
+            <th><spring:message code="download"/></th>
         </tr>
 
         <c:forEach var="report" items="${page.content}">
             <tr>
-                <td><c:out value="${report.companyName}"/></td>
-                <td><c:out value="${report.taxpayerCode}"/></td>
+                <td><c:out value="${report.id}"/></td>
+                <td><c:out value="${report.reportType.templateName}"/></td>
                 <td><c:out value="${report.completionTime}"/></td>
-                <td><c:out value="${report.totalAmountOfProperty}"/></td>
-                <td><c:out value="${report.accepted}"/></td>
-                <td><c:out value="${report.shouldBeChanged}"/></td>
-                <td><c:out value="${report.inspectorComment}"/></td>
-                <c:if test="${report.shouldBeChanged == true}">
-                    <td><a href="${pageContext.request.contextPath}/client/edit-report/${report.id}">edit</a></td>
-                </c:if>
-
+                <td><spring:message code="download"/></td>
             </tr>
         </c:forEach>
     </table>

@@ -7,7 +7,6 @@
 
 <%--<c:set var="fields" value="${reportTemplate.fields}"/>--%>
 <%--todo--%>
-
 <html>
 <head>
     <title>
@@ -24,15 +23,15 @@
 
     <form method="POST" class="" action="${pageContext.request.contextPath}/client/fill-report">
 
+        <input type="hidden" name="templateId" value="${reportTemplate.id}">
+
         <%--        todo--%>
         <c:forEach var="field" items="${reportTemplate.fields}">
 
+            <c:out value=" Input << ${field.fieldName} >>"/> "
             <div class="form-group">
                 <div class="">
-                    <input maxlength="45" minlength="1" name="<c:out value="${field.name}"/>" type="text"
-                           placeholder=
-                                   "<spring:message code="placeholder.input"/>
-                                        <c:out value=" ${field.name} :"/> " required>
+                    <input maxlength="45" minlength="1" name="<c:out value="${field.fieldName}"/>" type="text" required>
                 </div>
             </div>
 

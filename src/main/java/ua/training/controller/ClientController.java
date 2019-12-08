@@ -8,11 +8,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ua.training.entities.Report;
+import ua.training.entities.ReportParam;
+import ua.training.entities.ReportTemplate;
 import ua.training.entities.User;
-import ua.training.services.ReportService;
 import ua.training.services.UserService;
+import ua.training.services.impl.*;
+
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 @Controller
 @RequestMapping(value = "/client")
@@ -22,9 +31,16 @@ public class ClientController {
 
     @Autowired
     private UserService userService;
-
     @Autowired
-    private ReportService reportService;
+    private ReportTemplateServiceImpl reportTemplateService;
+    @Autowired
+    private TemplateFieldServiceImpl templateFieldService;
+    @Autowired
+    private PdfReportGenServiceImpl pdfReportGenService;
+    @Autowired
+    private ReportServiceImpl reportService;
+    @Autowired
+    private ReportParamServiceImpl reportParamService;
 
 
     @GetMapping("/personal-cabinet")
@@ -43,6 +59,39 @@ public class ClientController {
         return "client/show-reports";
     }
 
+    @PostMapping("/fill-report")
+    public String fillReport(@RequestParam Map<String, String> allRequestParams) {
+
+        ReportTemplate reportTemplate = reportTemplateService.findById(
+                Long.parseLong(allRequestParams.get("templateId")));
+
+        allRequestParams.remove("templateId"); //only params left
+
+        User loggedInUser = userService.obtainCurrentPrincipleUser();
+
+        Report report = new Report();
+        report.setReportType(reportTemplate);
+        report.setPerson(loggedInUser);
+        report.setCompletionTime(Calendar.getInstance().getTime());
+
+        Set<ReportParam> reportParams = new HashSet<>();
+        for (Map.Entry<String, String> param : allRequestParams.entrySet()) {
+            ReportParam reportParam = new ReportParam();
+            reportParam.setFieldName(param.getKey());
+            reportParam.setFieldValue(param.getValue());
+            reportParam.setReport(report);
+
+            reportParams.add(reportParam);
+        }
+
+        report.setReportParams(reportParams);
+        reportService.save(report);
+        for (ReportParam reportParam : reportParams) {
+            reportParamService.save(reportParam);
+        }
+
+        return "redirect:/client/report-done";
+    }
 
     @GetMapping("/report-done")
     public String successPageReportDone() {
@@ -50,3 +99,28 @@ public class ClientController {
     }
 
 }
+
+
+//    @GetMapping("/fill-report")
+//    public String fillReportForm(@RequestParam Long idTemplate) throws IOException, DocumentException {
+//        //todo get all fields
+////        String[] fieldValues = new String[]{"value"};
+////        String[] fieldNames = new String[]{"name"};
+//        String[] fieldValues = {"val"};
+//        ReportTemplate reportTemplate = reportTemplateService.findById(idTemplate);
+//        String[] fieldNames = templateFieldService
+//                .findFieldNamesByReportType(reportTemplate.getId()).toArray(new String[0]);
+//
+//        pdfReportGenService.substituteFields("1.pdf", "_1.pdf", fieldValues, fieldNames);
+//
+//        User loggedInUser = userService.obtainCurrentPrincipleUser();
+//
+//        Report report = new Report();
+//        report.setReportType(reportTemplate);
+//        report.setPerson(loggedInUser);
+//        report.setFilledValues(String.join(" ", fieldValues));
+//        reportService.save(report);
+//
+//        return "redirect:/client/report-done";
+//        //todo redirect to show all
+//    }

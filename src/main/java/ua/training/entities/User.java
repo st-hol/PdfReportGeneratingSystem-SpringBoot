@@ -1,6 +1,9 @@
 package ua.training.entities;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,7 +14,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Getter
 @Setter
 @EqualsAndHashCode
-//@ToString
 @Entity
 @Table(name = "persons")
 public class User {
@@ -36,6 +38,9 @@ public class User {
     @Transient
     private String passwordConfirm;
 
+    @OneToMany(mappedBy = "person")
+    private Set<Report> reports;
+
     @ManyToMany
     @JoinTable(name = "persons_has_roles",
             joinColumns = @JoinColumn(name = "id_person"),
@@ -43,14 +48,9 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
 
-    //todo refactor this (its just for test/dev process)
+    //todo refactor this
     @PrePersist
     void preInsert() {
-        if (this.assignedInspector == null) {
-            User inspector = new User();
-            inspector.setId(1L);
-            this.assignedInspector = inspector;
-        }
         if (this.roles.isEmpty()) {
             Role role = new Role();
             role.setId(1L);
@@ -58,14 +58,6 @@ public class User {
             roles.add(role);
         }
     }
-
-    //this field in table is a reference on itself
-    @ManyToOne(fetch = FetchType.LAZY
-            //, cascade = CascadeType.ALL
-            )
-    @JoinColumn(name = "id_inspector")
-    private User assignedInspector;
-
 
 
     @Override
