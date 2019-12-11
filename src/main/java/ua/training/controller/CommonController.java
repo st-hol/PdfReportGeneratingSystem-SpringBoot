@@ -25,13 +25,6 @@ public class CommonController {
     private RoleService roleService;
 
 
-    @GetMapping("/uploadFile")
-    public String uploadForm() {
-        return "inspector/upload-template";
-    }
-
-
-
     @GetMapping({"/", "/welcome"})
     public String welcome(Model model) {
         return "common/welcome";

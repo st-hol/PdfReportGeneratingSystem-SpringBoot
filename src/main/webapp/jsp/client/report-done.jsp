@@ -40,7 +40,7 @@
 
         <br>
 
-        <a class="" href="${pageContext.request.contextPath}/client/downloadFile/<c:out value="${reportId}"/>">
+        <a class="" href="${pageContext.request.contextPath}/client/download-file/<c:out value="${reportId}"/>">
             <spring:message code="download"/>
         </a>
 

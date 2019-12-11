@@ -104,7 +104,7 @@ public class ClientController {
     }
 
     //report-downloading command
-    @GetMapping(value = "/downloadFile/{fileId}", produces = MediaType.APPLICATION_PDF_VALUE)
+    @GetMapping(value = "/download-file/{fileId}", produces = MediaType.APPLICATION_PDF_VALUE)
     @ResponseBody
     public HttpEntity<byte[]> downloadReportPdf(@PathVariable String fileId) {
         Report dbFile = reportService.getFile(Long.parseLong(fileId));
@@ -112,7 +112,7 @@ public class ClientController {
 
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.APPLICATION_PDF);
-        header.set(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=report.pdf");
+        header.set(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=report" + fileId + ".pdf");
         header.setContentLength(data.length);
 
         return new HttpEntity<>(data, header);
