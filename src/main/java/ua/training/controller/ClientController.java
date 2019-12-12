@@ -12,10 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ua.training.entities.Report;
-import ua.training.entities.ReportParam;
-import ua.training.entities.ReportTemplate;
-import ua.training.entities.User;
+import ua.training.entities.*;
 import ua.training.services.UserService;
 import ua.training.services.impl.*;
 
@@ -68,7 +65,7 @@ public class ClientController {
         ReportTemplate reportTemplate = reportTemplateService.findById(
                 Long.parseLong(allRequestParams.get("templateId")));
 
-        allRequestParams.remove("templateId"); //only params left
+        allRequestParams.remove("templateId"); //so in map only params left
 
         User loggedInUser = userService.obtainCurrentPrincipleUser();
 
@@ -87,20 +84,29 @@ public class ClientController {
             reportParams.add(reportParam);
         }
 
+        String[] fieldNames = templateFieldService.findFieldsByReportType(report.getReportType())
+                .stream()
+                .map(TemplateField::getFieldName)
+                .toArray(String[]::new);
+
+        String[] fieldValues = reportParams.stream()
+                .map(ReportParam::getFieldValue)
+                .toArray(String[]::new);
+
         byte[] toDownload = pdfReportGenService.substituteFields(reportTemplate.getReportPdf(),
-                new String[]{"name"}, new String[]{"val"});
+                fieldNames, fieldValues);
 
         report.setReportPdf(toDownload);
-
         report.setReportParams(reportParams);
         reportService.save(report);
+
         for (ReportParam reportParam : reportParams) {
             reportParamService.save(reportParam);
         }
 
         uiModel.addAttribute("reportId", report.getId());
-//        return "redirect:/client/downloadFile/" + report.getId();
         return "client/report-done";
+//        return "redirect:/client/downloadFile/" + report.getId();
     }
 
     //report-downloading command

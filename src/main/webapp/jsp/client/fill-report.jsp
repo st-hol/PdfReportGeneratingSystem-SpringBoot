@@ -14,46 +14,79 @@
     </title>
     <meta name="viewport" content="width=device-width"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/report-list.css"/>
+
+    <jsp:include page="${pageContext.request.contextPath}/resources/css/bootstrap_min.jsp"/>
+    <jsp:include page="${pageContext.request.contextPath}/resources/js/jquery.jsp"/>
+    <jsp:include page="${pageContext.request.contextPath}/resources/js/bootstrap_min.jsp"/>
+
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/navbar.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="${pageContext.request.contextPath}/resources/css/personal-cabinet.css"/>
+    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
+    <link href="${contextPath}/resources/css/input-g.css" rel="stylesheet">
+
+
 </head>
 <body>
 
-<div class="table-cont">
+<div class="container bg-faded">
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <div class="row">
+                <div class="container offset-5">
 
 
-    <form method="POST" class="" action="${pageContext.request.contextPath}/client/fill-report">
+                    <form method="POST" class="form-signin"
+                          action="${pageContext.request.contextPath}/client/fill-report">
 
-        <input type="hidden" name="templateId" value="${reportTemplate.id}">
+                        <input type="hidden" name="templateId" value="${reportTemplate.id}">
 
-        <%--        todo--%>
-        <c:forEach var="field" items="${reportTemplate.fields}">
+                        <%--        todo--%>
+                        <c:forEach var="field" items="${reportTemplate.fields}">
 
-            <c:out value=" Input << ${field.fieldName} >>"/> "
-            <div class="form-group">
-                <div class="">
-                    <input maxlength="45" minlength="1" name="<c:out value="${field.fieldName}"/>" type="text" required>
+
+                        <div class="form-group">
+                            <div class="soflow-color">
+                                <div class="clearfix">
+                                    <h3 class="panel-title form-title-my">
+                                        <c:out value="Fill report fields, please:"/>
+                                    </h3>
+
+                                    <input maxlength="45" minlength="1" name="<c:out value="${field.fieldName}"/>"
+                                           type="text" placeholder="${field.fieldName}"
+                                           required>
+                                </div>
+                            </div>
+                            <br>
+                            </c:forEach>
+
+                            <div class="form-group">
+                                <div class="">
+                                    <button type="submit" class="btn btn-lg btn-primary btn-block">
+                                        <spring:message code="label.submit"/>
+                                    </button>
+
+                                    <BR>
+                                    <BR>
+
+                                    <a class="" href="${pageContext.request.contextPath}/personal-cabinet">
+                                        <div class="btn btn-lg btn-primary btn-block">
+                                            <spring:message code="back.to.cabinet"/>
+                                        </div>
+                                    </a>
+
+                                </div>
+                            </div>
+                    </form>
+
+
                 </div>
             </div>
-
-        </c:forEach>
-
-        <div class="form-group">
-            <div class="">
-                <button type="submit" class="btn btn-primary btn-sm">
-                    <spring:message code="label.submit"/>
-                </button>
-            </div>
         </div>
-    </form>
-
-    <br>
-    <div class="home">
-        <a class="" href="${pageContext.request.contextPath}/personal-cabinet">
-            <spring:message code="back.to.cabinet"/>
-        </a>
     </div>
 </div>
-
 
 </body>
 </html>

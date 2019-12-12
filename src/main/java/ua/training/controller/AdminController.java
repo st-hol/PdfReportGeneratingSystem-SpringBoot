@@ -11,8 +11,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ua.training.entities.ReportTemplate;
+import ua.training.entities.TemplateField;
 import ua.training.payload.UploadFileResponse;
+import ua.training.services.impl.PdfReportGenServiceImpl;
+import ua.training.services.impl.ReportServiceImpl;
 import ua.training.services.impl.ReportTemplateServiceImpl;
+import ua.training.services.impl.TemplateFieldServiceImpl;
+
+import java.io.IOException;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -23,6 +31,12 @@ public class AdminController {
 
     @Autowired
     private ReportTemplateServiceImpl reportTemplateService;
+    @Autowired
+    private TemplateFieldServiceImpl templateFieldService;
+    @Autowired
+    private PdfReportGenServiceImpl pdfReportGenService;
+    @Autowired
+    private ReportServiceImpl reportService;
 
     @GetMapping("/upload-template")
     public String uploadForm() {
@@ -35,11 +49,17 @@ public class AdminController {
         return "redirect:/inspector/upload-template";
     }
 
-
     @ResponseBody
     @PostMapping("/upload-template")
-    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
+    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         ReportTemplate reportTemplate = reportTemplateService.storeFile(file);
+
+        Set<String> stampFields = pdfReportGenService.getFieldNames(reportTemplate.getReportPdf());
+        Set<TemplateField> templateFields = stampFields.stream()
+                .map(str -> new TemplateField(str, reportTemplate))
+                .map(templateFieldService::save)
+                .collect(Collectors.toSet());
+        reportTemplate.setFields(templateFields);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/inspector/download-file/")
@@ -67,6 +87,22 @@ public class AdminController {
 
 
 }
+
+
+//        reportTemplateService.save(reportTemplate); //upd. with fields
+
+//        Set<String> stampFields = pdfReportGenService.getFieldNames(reportTemplate.getReportPdf());
+//        stampFields.stream()
+//                .map(str -> new TemplateField(str, reportTemplate))
+//                .forEach(templateFieldService::save);
+//
+//        Set<TemplateField> templateFields = new HashSet<>(
+//                templateFieldService.findFieldsByReportType(reportTemplate));
+//
+//        reportTemplate.setFields(templateFields);
+//        reportTemplateService.save(reportTemplate); //upd. with fields
+
+
 
 
 //    @Autowired

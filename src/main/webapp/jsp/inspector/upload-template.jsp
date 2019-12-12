@@ -61,14 +61,22 @@
 </div>
 
 <br>
-<div class="container">
-    <div class="row">
-        <h4><spring:message code="admin.you.admin"/></h4>
+
+<div class="center-block">
+    <div class="container">
+        <div class="row">
+            <h4><spring:message code="admin.you.admin"/></h4>
+        </div>
     </div>
-</div>
-<div class="container">
-    <div class="row">
-        <h4><spring:message code="admin.you.can"/></h4>
+    <div class="container">
+        <div class="row">
+            <h4><spring:message code="admin.you.can"/></h4>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <h4><spring:message code="admin.notice.filename"/></h4>
+        </div>
     </div>
 </div>
 

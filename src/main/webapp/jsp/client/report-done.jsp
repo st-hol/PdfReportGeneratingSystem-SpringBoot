@@ -19,8 +19,12 @@
     <jsp:include page="${pageContext.request.contextPath}/resources/js/jquery.jsp"/>
     <jsp:include page="${pageContext.request.contextPath}/resources/js/bootstrap_min.jsp"/>
 
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/navbar.css"/>
     <link rel="stylesheet" type="text/css"
           href="${pageContext.request.contextPath}/resources/css/personal-cabinet.css"/>
+    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
 </head>
 <body>
 
@@ -34,20 +38,23 @@
             </h3>
         </div>
 
+
         <a class="" href="${pageContext.request.contextPath}/personal-cabinet">
-            <spring:message code="back.to.cabinet"/>
+            <button type="submit" class="btn btn-lg btn-primary btn-block">
+                <spring:message code="back.to.cabinet"/>
+            </button>
         </a>
-
         <br>
-
         <a class="" href="${pageContext.request.contextPath}/client/download-file/<c:out value="${reportId}"/>">
-            <spring:message code="download"/>
+            <button type="submit" class="btn btn-lg btn-primary btn-block">
+                <spring:message code="download"/>
+            </button>
         </a>
-
         <br>
-
         <a class="" href="${pageContext.request.contextPath}/personal-cabinet">
-            <spring:message code="get.by.email"/>
+            <button type="submit" class="btn btn-lg btn-primary btn-block">
+                <spring:message code="get.by.email"/>
+            </button>
         </a>
     </div>
 </div>

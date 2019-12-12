@@ -45,7 +45,7 @@ public class ReportTemplateServiceImpl {
             }
 
             ReportTemplate reportTemplate = new ReportTemplate();
-            reportTemplate.setTemplateName("g");
+            reportTemplate.setTemplateName(fileName.substring(0, fileName.lastIndexOf('.')));
             reportTemplate.setReportPdf(file.getBytes());
 
             return reportTemplateRepository.save(reportTemplate);
