@@ -62,25 +62,28 @@
 
 <br>
 
-<div class="center-block">
-    <div class="container">
-        <div class="row">
-            <h4><spring:message code="admin.you.admin"/></h4>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="center-block">
+            <div class="row justify-content-center">
+                <div class="">
+                    <h4><spring:message code="admin.you.admin"/></h4>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="">
+                    <h4><spring:message code="admin.you.can"/></h4>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="">
+                    <h4><spring:message code="admin.notice.filename"/></h4>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="container">
-        <div class="row">
-            <h4><spring:message code="admin.you.can"/></h4>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <h4><spring:message code="admin.notice.filename"/></h4>
-        </div>
-    </div>
-</div>
 
-<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 
 </body>
 </html>
