@@ -1,7 +1,8 @@
 package ua.training.entities;
 
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,7 +12,8 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "completed_reports")
-@Data
+@Getter
+@Setter
 public class Report {
     @Id
     @GeneratedValue(strategy = IDENTITY)

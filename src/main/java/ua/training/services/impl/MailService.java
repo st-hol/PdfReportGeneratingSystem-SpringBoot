@@ -1,7 +1,8 @@
 package ua.training.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ public class MailService {
     @Autowired
     private JavaMailSender emailSender;
 
-    public void sendSimpleMessage(Mail mail) throws MessagingException {
+    public void sendMailWithAttachment(Mail mail, byte[] pdfBytes) throws MessagingException {
 
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -26,10 +27,10 @@ public class MailService {
         helper.setTo(mail.getTo());
         helper.setFrom(mail.getTo());
 
-        helper.addAttachment("attachment-document-name.jpg", new ClassPathResource("2.jpg"));
-
+        InputStreamSource source = new ByteArrayResource(pdfBytes, "report.pdf");
+        helper.addAttachment("report.pdf", source);
         emailSender.send(message);
-
+        //It might be that gmail uses this delay to prevent spammers from using their SMTP server from the "outside": if the SMTP is called from the actual webmail client it would not use this delay.
     }
 
 }

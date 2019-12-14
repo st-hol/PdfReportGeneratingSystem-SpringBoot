@@ -1,9 +1,9 @@
 'use strict';
 
-var singleUploadForm = document.querySelector('#singleUploadForm');
-var singleFileUploadInput = document.querySelector('#singleFileUploadInput');
-var singleFileUploadError = document.querySelector('#singleFileUploadError');
-var singleFileUploadSuccess = document.querySelector('#singleFileUploadSuccess');
+var singleUploadForm = document.querySelector('#sendEmailForm');
+var singleFileUploadInput = document.querySelector('#sendEmailLink');
+var singleFileUploadError = document.querySelector('#sendEmailError');
+var singleFileUploadSuccess = document.querySelector('#sendEmailSuccess');
 
 function uploadSingleFile(file) {
     var formData = new FormData();
@@ -41,17 +41,17 @@ singleUploadForm.addEventListener('submit', function (event) {
 
 // 'use strict';
 //
-// var singleUploadForm = document.querySelector('#singleUploadForm');
-// var singleFileUploadInput = document.querySelector('#singleFileUploadInput');
-// var singleFileUploadError = document.querySelector('#singleFileUploadError');
-// var singleFileUploadSuccess = document.querySelector('#singleFileUploadSuccess');
+// var sendEmailForm = document.querySelector('#sendEmailForm');
+// var sendEmailLink = document.querySelector('#sendEmailLink');
+// var sendEmailError = document.querySelector('#sendEmailError');
+// var sendEmailSuccess = document.querySelector('#sendEmailSuccess');
 //
 // // var multipleUploadForm = document.querySelector('#multipleUploadForm');
 // // var multipleFileUploadInput = document.querySelector('#multipleFileUploadInput');
 // // var multipleFileUploadError = document.querySelector('#multipleFileUploadError');
 // // var multipleFileUploadSuccess = document.querySelector('#multipleFileUploadSuccess');
 //
-// function uploadSingleFile(file) {
+// function sendEmail(file) {
 //     var formData = new FormData();
 //     formData.append("file", file);
 //
@@ -62,12 +62,12 @@ singleUploadForm.addEventListener('submit', function (event) {
 //         console.log(xhr.responseText);
 //         var response = JSON.parse(xhr.responseText);
 //         if (xhr.status == 200) {
-//             singleFileUploadError.style.display = "none";
-//             singleFileUploadSuccess.innerHTML = "<p>File Uploaded Successfully.</p><p>DownloadUrl : <a href='" + response.fileDownloadUri + "' target='_blank'>" + response.fileDownloadUri + "</a></p>";
-//             singleFileUploadSuccess.style.display = "block";
+//             sendEmailError.style.display = "none";
+//             sendEmailSuccess.innerHTML = "<p>File Uploaded Successfully.</p><p>DownloadUrl : <a href='" + response.fileDownloadUri + "' target='_blank'>" + response.fileDownloadUri + "</a></p>";
+//             sendEmailSuccess.style.display = "block";
 //         } else {
-//             singleFileUploadSuccess.style.display = "none";
-//             singleFileUploadError.innerHTML = (response && response.message) || "Some Error Occurred";
+//             sendEmailSuccess.style.display = "none";
+//             sendEmailError.innerHTML = (response && response.message) || "Some Error Occurred";
 //         }
 //     }
 //
@@ -103,13 +103,13 @@ singleUploadForm.addEventListener('submit', function (event) {
 // //     xhr.send(formData);
 // // }
 //
-// singleUploadForm.addEventListener('submit', function (event) {
-//     var files = singleFileUploadInput.files;
+// sendEmailForm.addEventListener('submit', function (event) {
+//     var files = sendEmailLink.files;
 //     if (files.length === 0) {
-//         singleFileUploadError.innerHTML = "Please select a file";
-//         singleFileUploadError.style.display = "block";
+//         sendEmailError.innerHTML = "Please select a file";
+//         sendEmailError.style.display = "block";
 //     }
-//     uploadSingleFile(files[0]);
+//     sendEmail(files[0]);
 //     event.preventDefault();
 // }, true);
 //

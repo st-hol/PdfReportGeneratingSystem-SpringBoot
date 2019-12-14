@@ -13,14 +13,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ua.training.entities.*;
+import ua.training.payload.SendFileResponse;
 import ua.training.services.UserService;
 import ua.training.services.impl.*;
+import ua.training.util.Mail;
 
+import javax.mail.MessagingException;
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @RequestMapping(value = "/client")
@@ -40,6 +40,9 @@ public class ClientController {
     private ReportServiceImpl reportService;
     @Autowired
     private ReportParamServiceImpl reportParamService;
+    @Autowired
+    private MailService mailService;
+
 
 
     @GetMapping("/personal-cabinet")
@@ -57,6 +60,22 @@ public class ClientController {
 
         return "client/show-reports";
     }
+
+    @GetMapping("/choose-report")
+    public String chooseReportTemplateForm(Model uiModel) {
+        List<ReportTemplate> reportTemplates = reportTemplateService.findAll();
+        uiModel.addAttribute("reportTemplates", reportTemplates);
+        return "client/choose-report";
+    }
+
+    @PostMapping("/choose-report")
+    public String chooseReportTemplate(@RequestParam Long idTemplate,
+                                       Model uiModel) {
+        ReportTemplate reportTemplate = reportTemplateService.findById(idTemplate);
+        uiModel.addAttribute("reportTemplate", reportTemplate);
+        return "client/fill-report";
+    }
+
 
     @PostMapping("/fill-report")
     public String fillReport(@RequestParam Map<String, String> allRequestParams, Model uiModel)
@@ -129,7 +148,36 @@ public class ClientController {
         return "client/report-done";
     }
 
+    //report-onEmail  command
+    @GetMapping(value = "/send-by-email/{fileId}")
+    @ResponseBody
+    public SendFileResponse email(@PathVariable String fileId) throws MessagingException {
+        User currentUser = userService.obtainCurrentPrincipleUser();
+
+        Mail mail = new Mail();
+        mail.setFrom("AUTO-PDF SYSTEM");
+        mail.setTo(currentUser.getUsername());
+        mail.setSubject("Sending PDF-report as e-mail attachment");
+        mail.setContent("Your PDF-report attached to this mail.");
+
+        Report report = reportService.getFile(Long.parseLong(fileId));
+        byte[] pdfBytes = report.getReportPdf();
+
+        //check this report belongs to user
+        if (!currentUser.getReports().contains(report)) {
+            return new SendFileResponse(false, report.getReportType().getTemplateName(),
+                    currentUser.getUsername());
+        }
+
+        mailService.sendMailWithAttachment(mail, pdfBytes);
+        return new SendFileResponse(true, report.getReportType().getTemplateName(),
+                currentUser.getUsername());
+    }        //return "redirect:/client/personal-cabinet";
+
+
 }
+
+
 
 
 //    @GetMapping("/fill-report")

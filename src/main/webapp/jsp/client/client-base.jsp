@@ -51,8 +51,8 @@
         <div class="col-md-9 ft">
             <footer class="footer">
                 <div class="row">
-                    <div class="col-md-4">
-                        <span class="copyright">Copyright &copy; TaxReportSystem 2019</span>
+                    <div class="col-md-7">
+                        <span class="copyright"><spring:message code="copy.right"/></span>
                     </div>
                 </div>
             </footer>

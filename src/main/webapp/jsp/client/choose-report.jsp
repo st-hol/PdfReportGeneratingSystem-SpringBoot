@@ -42,7 +42,7 @@
                 </h3>
             </div>
 
-            <form method="POST" class="form-signin" action="${pageContext.request.contextPath}/reporting/choose-report">
+            <form method="POST" class="form-signin" action="${pageContext.request.contextPath}/client/choose-report">
 
                 <div class="form-group">
                     <select class="soflow-color" name="idTemplate" required>

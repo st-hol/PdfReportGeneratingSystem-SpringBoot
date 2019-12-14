@@ -82,6 +82,7 @@
             </div>
         </div>
     </div>
+</div>
 
     <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 

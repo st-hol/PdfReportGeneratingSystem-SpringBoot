@@ -13,7 +13,7 @@
             </h5>
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a href="${pageContext.request.contextPath}/reporting/choose-report" class="nav-link">
+                    <a href="${pageContext.request.contextPath}/client/choose-report" class="nav-link">
                         <i class="fa fa-home"></i>
                         <spring:message code="submit.report"/>
                     </a>
@@ -26,12 +26,12 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/client/obtain-digital-signature">
-                        <i class="fa fa-check"></i>
-                        <spring:message code="obtain.d.s"/>
-                    </a>
-                </li>
+                <%--                <li class="nav-item">--%>
+                <%--                    <a class="nav-link" href="${pageContext.request.contextPath}/client/obtain-digital-signature">--%>
+                <%--                        <i class="fa fa-check"></i>--%>
+                <%--                        <spring:message code="obtain.d.s"/>--%>
+                <%--                    </a>--%>
+                <%--                </li>--%>
 
 
             </ul>
