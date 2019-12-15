@@ -1,9 +1,9 @@
 'use strict';
 
-var singleUploadForm = document.querySelector('#sendEmailForm');
-var singleFileUploadInput = document.querySelector('#sendEmailLink');
-var singleFileUploadError = document.querySelector('#sendEmailError');
-var singleFileUploadSuccess = document.querySelector('#sendEmailSuccess');
+var singleUploadForm = document.querySelector('#singleUploadForm');
+var singleFileUploadInput = document.querySelector('#singleFileUploadInput');
+var singleFileUploadError = document.querySelector('#singleFileUploadError');
+var singleFileUploadSuccess = document.querySelector('#singleFileUploadSuccess');
 
 function uploadSingleFile(file) {
     var formData = new FormData();

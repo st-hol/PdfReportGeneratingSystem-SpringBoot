@@ -148,7 +148,9 @@
                 <td>
                     <a class="page-link get-link"
                        href="${pageContext.request.contextPath}/client/download-file/${report.id}">
-                        <spring:message code="download"/>
+                        <div class="btn btn-lg btn-primary btn-block">
+                            <spring:message code="download"/>
+                        </div>
                     </a>
                 </td>
                 <td>

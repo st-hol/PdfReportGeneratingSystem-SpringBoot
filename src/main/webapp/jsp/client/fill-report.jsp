@@ -44,16 +44,15 @@
                         <input type="hidden" name="templateId" value="${reportTemplate.id}">
 
                         <%--        todo--%>
+                        <h3 class="panel-title form-title-my">
+                            <c:out value="Fill report fields, please:"/>
+                        </h3>
                         <c:forEach var="field" items="${reportTemplate.fields}">
 
 
                         <div class="form-group">
                             <div class="soflow-color">
                                 <div class="clearfix">
-                                    <h3 class="panel-title form-title-my">
-                                        <c:out value="Fill report fields, please:"/>
-                                    </h3>
-
                                     <input maxlength="45" minlength="1" name="<c:out value="${field.fieldName}"/>"
                                            type="text" placeholder="${field.fieldName}"
                                            required>

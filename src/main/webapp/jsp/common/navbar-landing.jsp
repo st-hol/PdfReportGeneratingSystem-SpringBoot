@@ -31,11 +31,11 @@
         <ul class="navbar-nav mr-4">
 
 
-            <li class="nav-item">
-                <a class="nav-link " href="${pageContext.request.contextPath}/">
-                    <spring:message code="try.demo"/>
-                </a>
-            </li>
+            <%--            <li class="nav-item">--%>
+            <%--                <a class="nav-link " href="${pageContext.request.contextPath}/">--%>
+            <%--                    <spring:message code="try.demo"/>--%>
+            <%--                </a>--%>
+            <%--            </li>--%>
             <li class="nav-item">
                 <a class="nav-link " href="${pageContext.request.contextPath}/personal-cabinet">
                     <spring:message code="pers.cab"/>

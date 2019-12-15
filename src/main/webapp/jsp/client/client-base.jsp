@@ -51,7 +51,7 @@
         <div class="col-md-9 ft">
             <footer class="footer">
                 <div class="row">
-                    <div class="col-md-7">
+                    <div class="col-md-9">
                         <span class="copyright"><spring:message code="copy.right"/></span>
                     </div>
                 </div>
