@@ -47,14 +47,14 @@
                         <h3 class="panel-title form-title-my">
                             <c:out value="Fill report fields, please:"/>
                         </h3>
-                        <c:forEach var="field" items="${reportTemplate.fields}">
+                        <c:forEach var="fieldName" items="${fieldNames}">
 
 
                         <div class="form-group">
                             <div class="soflow-color">
                                 <div class="clearfix">
-                                    <input maxlength="45" minlength="1" name="<c:out value="${field.fieldName}"/>"
-                                           type="text" placeholder="${field.fieldName}"
+                                    <input maxlength="45" minlength="1" name="<c:out value="${fieldName}"/>"
+                                           type="text" placeholder="${fieldName}"
                                            required>
                                 </div>
                             </div>

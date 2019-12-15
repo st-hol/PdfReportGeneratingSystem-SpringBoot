@@ -12,7 +12,10 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ua.training.entities.*;
+import ua.training.entities.Report;
+import ua.training.entities.ReportParam;
+import ua.training.entities.ReportTemplate;
+import ua.training.entities.User;
 import ua.training.payload.SendFileResponse;
 import ua.training.services.UserService;
 import ua.training.services.impl.*;
@@ -73,6 +76,10 @@ public class ClientController {
                                        Model uiModel) {
         ReportTemplate reportTemplate = reportTemplateService.findById(idTemplate);
         uiModel.addAttribute("reportTemplate", reportTemplate);
+
+        List<String> fieldNames = templateFieldService.findFieldNamesByReportType(idTemplate);
+        uiModel.addAttribute("fieldNames", fieldNames);
+
         return "client/fill-report";
     }
 
@@ -103,17 +110,8 @@ public class ClientController {
             reportParams.add(reportParam);
         }
 
-        String[] fieldNames = templateFieldService.findFieldsByReportType(report.getReportType())
-                .stream()
-                .map(TemplateField::getFieldName)
-                .toArray(String[]::new);
-
-        String[] fieldValues = reportParams.stream()
-                .map(ReportParam::getFieldValue)
-                .toArray(String[]::new);
-
         byte[] toDownload = pdfReportGenService.substituteFields(reportTemplate.getReportPdf(),
-                fieldNames, fieldValues);
+                allRequestParams);
 
         report.setReportPdf(toDownload);
         report.setReportParams(reportParams);
@@ -177,6 +175,15 @@ public class ClientController {
 
 }
 
+
+//        String[] fieldNames = templateFieldService.findFieldsByReportType(report.getReportType())
+//                .stream()
+//                .map(TemplateField::getFieldName)
+//                .toArray(String[]::new);
+//
+//        String[] fieldValues = reportParams.stream()
+//                .map(ReportParam::getFieldValue)
+//                .toArray(String[]::new);
 
 
 

@@ -19,6 +19,7 @@ import ua.training.services.impl.ReportTemplateServiceImpl;
 import ua.training.services.impl.TemplateFieldServiceImpl;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -54,7 +55,7 @@ public class AdminController {
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         ReportTemplate reportTemplate = reportTemplateService.storeFile(file);
 
-        Set<String> stampFields = pdfReportGenService.getFieldNames(reportTemplate.getReportPdf());
+        List<String> stampFields = pdfReportGenService.getFieldNamesOrdered(reportTemplate.getReportPdf());
         Set<TemplateField> templateFields = stampFields.stream()
                 .map(str -> new TemplateField(str, reportTemplate))
                 .map(templateFieldService::save)
