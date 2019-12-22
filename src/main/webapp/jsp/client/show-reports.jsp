@@ -32,8 +32,8 @@
     <link href="${pageContext.request.contextPath}/resources/css/preload.css" rel="stylesheet">
 
 </head>
-<body>
 
+<c:if test="${noOfPages-1} >= 0">
 <div class="row justify-content-center">
     <div class="panel-heading clearfix">
         <h3 class="panel-title">
@@ -54,6 +54,7 @@
                     </a>
                 </li>
             </c:if>
+
 
             <c:forEach begin="0" end="${noOfPages-1}" var="i">
                 <c:choose>
@@ -89,12 +90,12 @@
 </nav>
 
 
-<div class="row justify-content-center">
-    <div class="panel-heading clearfix">
-        <h3 class="panel-title">
-            <div><spring:message code="select.n.pages.disp"/></div>
-        </h3>
-    </div>
+    <div class="row justify-content-center">
+        <div class="panel-heading clearfix">
+            <h3 class="panel-title">
+                <div><spring:message code="select.n.pages.disp"/></div>
+            </h3>
+        </div>
 </div>
 <%--sizing--%>
 <nav>
@@ -120,57 +121,71 @@
 </nav>
 
 
-<div id="loader" class="center"></div>
+    <div id="loader" class="center"></div>
 
-<div class="row justify-content-center">
-    <div class="send-email-response">
-        <div id="sendEmailError"></div>
-        <div id="sendEmailSuccess"></div>
-    </div>
+    <div class="row justify-content-center">
+        <div class="send-email-response">
+            <div id="sendEmailError"></div>
+            <div id="sendEmailSuccess"></div>
+        </div>
 </div>
 
 
-<form id="sendEmailForm" name="sendEmailForm">
-    <table class="responstable" border="1" cellpadding="3" cellspacing="3">
-        <tr>
-            <th><spring:message code="placeholder.report.id"/></th>
-            <th><spring:message code="placeholder.report.template.name"/></th>
-            <th><spring:message code="completion.time"/></th>
-            <th><spring:message code="click.download"/></th>
-            <th><spring:message code="click.get.by.email"/></th>
-        </tr>
-
-        <c:forEach var="report" items="${page.content}">
+    <form id="sendEmailForm" name="sendEmailForm">
+        <table class="responstable" border="1" cellpadding="3" cellspacing="3">
             <tr>
-                <td><c:out value="${report.id}"/></td>
-                <td><c:out value="${report.reportType.templateName}"/></td>
-                <td><c:out value="${report.completionTime}"/></td>
-                <td>
-                    <a class="page-link get-link"
-                       href="${pageContext.request.contextPath}/client/download-file/${report.id}">
-                        <div class="btn btn-lg btn-primary btn-block">
-                            <spring:message code="download"/>
-                        </div>
-                    </a>
-                </td>
-                <td>
-
-                    <input type="hidden" id="sendEmailLink"
-                           value="${pageContext.request.contextPath}/client/send-by-email/${report.id}">
-                    <button type="submit" class="btn btn-lg btn-primary btn-block">
-                        <spring:message code="send"/>
-                    </button>
-
-                        <%--                <a class="page-link get-link"--%>
-                        <%--                   href="${pageContext.request.contextPath}/client/send-by-email/${report.id}">--%>
-                        <%--                    <spring:message code="send"/>--%>
-                        <%--                </a>--%>
-                </td>
+                <th><spring:message code="placeholder.report.id"/></th>
+                <th><spring:message code="placeholder.report.template.name"/></th>
+                <th><spring:message code="completion.time"/></th>
+                <th><spring:message code="click.download"/></th>
+                <th><spring:message code="click.get.by.email"/></th>
             </tr>
-        </c:forEach>
-    </table>
+
+            <c:forEach var="report" items="${page.content}">
+                <tr>
+                    <td><c:out value="${report.id}"/></td>
+                    <td><c:out value="${report.reportType.templateName}"/></td>
+                    <td><c:out value="${report.completionTime}"/></td>
+                    <td>
+                        <a class="page-link get-link"
+                           href="${pageContext.request.contextPath}/client/download-file/${report.id}">
+                            <div class="btn btn-lg btn-primary btn-block">
+                                <spring:message code="download"/>
+                            </div>
+                        </a>
+                    </td>
+                    <td>
+
+                        <input type="hidden" id="sendEmailLink"
+                               value="${pageContext.request.contextPath}/client/send-by-email/${report.id}">
+                        <button type="submit" class="btn btn-lg btn-primary btn-block">
+                            <spring:message code="send"/>
+                        </button>
+
+                            <%--                <a class="page-link get-link"--%>
+                            <%--                   href="${pageContext.request.contextPath}/client/send-by-email/${report.id}">--%>
+                            <%--                    <spring:message code="send"/>--%>
+                            <%--                </a>--%>
+                    </td>
+                </tr>
+            </c:forEach>
+        </table>
 </form>
 <br>
+
+</c:if>
+<c:if test="${noOfPages - 1<0}">
+
+    <div class="row justify-content-center">
+        <div class="panel-heading clearfix">
+            <h3 class="panel-title">
+                <div><spring:message code="u.have.no.reports.yet"/></div>
+            </h3>
+        </div>
+    </div>
+
+</c:if>
+
 <div class="row justify-content-center">
     <a class="" href="${pageContext.request.contextPath}/personal-cabinet">
         <div class="btn btn-lg btn-primary btn-block">
@@ -178,6 +193,7 @@
         </div>
     </a>
 </div>
+
 <script src="${pageContext.request.contextPath}/resources/js/send-email.js"></script>
 
 </body>
