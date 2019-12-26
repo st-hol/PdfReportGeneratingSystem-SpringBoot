@@ -33,7 +33,7 @@
 
 </head>
 
-<c:if test="${noOfPages-1} >= 0">
+<c:if test="${noOfPages-1 >= 0}">
 <div class="row justify-content-center">
     <div class="panel-heading clearfix">
         <h3 class="panel-title">
