@@ -1,49 +1,43 @@
 package ua.training.util;
 
-import org.junit.Assert;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatchers;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
-import ua.training.entities.User;
-import ua.training.repositories.UserRepository;
-import ua.training.services.UserService;
 
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
+import ua.training.entities.User;
+import ua.training.services.UserService;
 
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserValidatorTest {
 
-    @Autowired
-    private UserValidator userValidator;
-
-    @MockBean
+    @Mock
     private UserService userService;
 
+    @InjectMocks
+    private UserValidator userValidator;
 
     @Test
-    public void Given_CorrectInputData_WhenCheckingWithValidator_Then_ShouldBeNoErrors() {
-
-        UserValidator userValidator = new UserValidator();
-        userValidator.setUserService(userService); //it must work without setter. why it is not autowired
+    public void givenCorrectInputData_whenCheckingWithValidator_thenShouldBeNoErrors() {
 
         //everything to make it valid
         User validUser = new User();
         validUser.setPassword("123");
         validUser.setPasswordConfirm("123");
-        validUser.setUsername("testusername");
+        validUser.setUsername("testusername@gmail.com");
 
-        Mockito.when(userService.findByUsername("testusername"))
+        Mockito.when(userService.findByUsername("testusername@gmail.com"))
                 .thenReturn(null);
 
         Errors errors = new BeanPropertyBindingResult(validUser, "validUser");
@@ -54,10 +48,7 @@ public class UserValidatorTest {
 
 
     @Test
-    public void Given_InvalidUsername_WhenCheckingWithValidator_Then_ShouldBeUsernameError() {
-        UserValidator userValidator = new UserValidator();
-        userValidator.setUserService(userService); //it must work without setter. why it is not autowired
-
+    public void givenInvalidUsername_whenCheckingWithValidator_thenShouldBeUsernameError() {
         //everything to make it valid except the username
         User userWithInvalidUsername = new User();
         userWithInvalidUsername.setPassword("123");
@@ -75,10 +66,7 @@ public class UserValidatorTest {
     }
 
     @Test
-    public void Given_ExistingUsername_WhenCheckingWithValidator_Then_ShouldBeUsernameError() {
-        UserValidator userValidator = new UserValidator();
-        userValidator.setUserService(userService); //it must work without setter. why it is not autowired
-
+    public void givenExistingUsername_whenCheckingWithValidator_thenShouldBeUsernameError() {
         //everything to make it valid except the username
         User userWithExistingUsername = new User();
         userWithExistingUsername.setPassword("123");
@@ -96,10 +84,7 @@ public class UserValidatorTest {
     }
 
     @Test
-    public void Given_InvalidPassword_WhenCheckingWithValidator_Then_ShouldBePasswordError() {
-        UserValidator userValidator = new UserValidator();
-        userValidator.setUserService(userService); //it must work without setter. why it is not autowired
-
+    public void givenInvalidPassword_whenCheckingWithValidator_thenShouldBePasswordError() {
         //everything to make it valid except the username
         User userWithInvalidPassword = new User();
         userWithInvalidPassword.setPassword("#");
@@ -117,10 +102,7 @@ public class UserValidatorTest {
     }
 
     @Test
-    public void Given_DifferentPasswords_WhenCheckingWithValidator_Then_ShouldBePasswordError() {
-        UserValidator userValidator = new UserValidator();
-        userValidator.setUserService(userService); //it must work without setter. why it is not autowired
-
+    public void givenDifferentPasswords_whenCheckingWithValidator_thenShouldBePasswordError() {
         //everything to make it valid except the username
         User userWithDifferentPasswords = new User();
         userWithDifferentPasswords.setPassword("password_itself");

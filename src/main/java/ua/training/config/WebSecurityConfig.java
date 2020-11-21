@@ -67,11 +67,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        auth.userDetailsService(userDetailsService).passwordEncoder(NoOpPasswordEncoder.getInstance());
     }
 
+
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) {
         web
                 .ignoring()
-                .antMatchers("/resources/**", "/webjars/**");
+                .antMatchers("/resources/**",
+                        "/css/**",
+                        "/image/**",
+                        "/libs/**",
+                        "/js/**",
+                        "/fonts/**",
+                        "/webjars/**");
     }
-
 }
