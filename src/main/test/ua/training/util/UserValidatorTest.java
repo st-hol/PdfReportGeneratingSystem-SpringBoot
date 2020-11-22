@@ -18,6 +18,9 @@ import ua.training.entities.User;
 import ua.training.services.UserService;
 
 
+/**
+ * @author Stanislav_Holovachuk, Olena_Patsevko
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserValidatorTest {
@@ -30,7 +33,6 @@ public class UserValidatorTest {
 
     @Test
     public void givenCorrectInputData_whenCheckingWithValidator_thenShouldBeNoErrors() {
-
         //everything to make it valid
         User validUser = new User();
         validUser.setPassword("123");
@@ -67,7 +69,6 @@ public class UserValidatorTest {
 
     @Test
     public void givenExistingUsername_whenCheckingWithValidator_thenShouldBeUsernameError() {
-        //everything to make it valid except the username
         User userWithExistingUsername = new User();
         userWithExistingUsername.setPassword("123");
         userWithExistingUsername.setPasswordConfirm("123");
@@ -85,7 +86,6 @@ public class UserValidatorTest {
 
     @Test
     public void givenInvalidPassword_whenCheckingWithValidator_thenShouldBePasswordError() {
-        //everything to make it valid except the username
         User userWithInvalidPassword = new User();
         userWithInvalidPassword.setPassword("#");
         userWithInvalidPassword.setPasswordConfirm("#");
@@ -103,7 +103,6 @@ public class UserValidatorTest {
 
     @Test
     public void givenDifferentPasswords_whenCheckingWithValidator_thenShouldBePasswordError() {
-        //everything to make it valid except the username
         User userWithDifferentPasswords = new User();
         userWithDifferentPasswords.setPassword("password_itself");
         userWithDifferentPasswords.setPasswordConfirm("password_confirmation");

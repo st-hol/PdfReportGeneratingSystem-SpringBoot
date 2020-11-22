@@ -30,6 +30,15 @@ import ua.training.entities.Report;
 import ua.training.entities.Role;
 import ua.training.entities.User;
 
+
+/**
+ * TASK 7: INTEGRATION TESTING
+ *
+ * Tests on repository methods.
+ * In-memory H2 database is used.
+ *
+ * @author Stanislav_Holovachuk, Olena_Patsevko
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {
         Application.class,
